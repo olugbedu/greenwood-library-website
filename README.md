@@ -1,147 +1,118 @@
-# Linux Command Line & Filesystem Navigation
+
+# Linux Text Editor Task – Corrected Submission
 
 ## Introduction
 
-This is the Linux Filesystem Navigation and Command Line task. The project focuses on using the Linux terminal to navigate the filesystem, manipulate files/directories, and complete the Side Hustle Task using essential CLI commands.
----
+This README outlines using the Linux Text Editor:
 
-## What I Used
+- Using **Linux-based text editors** such as `vim` and `nano`
+- Creating, editing, and managing files using these editors
+- Understanding use cases, functionality, and navigation within both editors
 
-- **Operating System**: Ubuntu 24.04 LTS (EC2 Instance)
-- **Terminal**: Ubuntu default terminal
-- **Linux Shell**: Bash
-
-![](images/ubuntu.png)
+All actions were performed using **Ubuntu 22.04 LTS**.
 
 ---
 
-##  Linux Command Line Basics
+## Tools Used
 
-##  The Side Hustle Task – Step-by-Step
+- **Operating System**: Ubuntu 22.04 LTS (VirtualBox)
+- **Text Editors**: Vim, Nano (both installed by default)
+- **Terminal Access**: Ubuntu Terminal (Bash)
 
-###  Step 1: Create Main Directory `SideHustle`
+---
+
+## Task Steps
+
+### Step 1: Create and Edit a File Using `nano`
 
 ```bash
-mkdir SideHustle
-cd SideHustle
+nano my_notes.txt
 ```
 
-![Step 1 Screenshot](images/mkdir-cd.png)
+- Entered some text:
+  ```
+  This is a test file created with nano.
+  Nano is easy to use.
+  ```
+
+- Saved with `CTRL + O`, then exited with `CTRL + X`.
+
+![Nano editor with content](images/nano.png)
 
 ---
 
-###  Step 2: Create Subdirectories – `Clients`, `Projects`, `Invoices`
+### Step 2: View Content of the File
 
 ```bash
-mkdir Clients Projects Invoices
+cat my_notes.txt
 ```
 
-![Step 2 Screenshot](images/mkdir2.png)
+- Output:
+  ```
+  This is a test file created with nano.
+  Nano is easy to use.
+  ```
+
+![Terminal output using cat](images/cat-mynotes.png)
 
 ---
 
-###  Step 3: Create `clients.txt` in `Clients` Folder and Add Content
+### Step 3: Create and Edit a File Using `vim`
 
 ```bash
-touch Clients/clients.txt
-echo "Client A" > Clients/clients.txt
+vim project.txt
 ```
 
-![Step 3 Screenshot](images/touch-echo.png)
+- Pressed `i` to enter INSERT mode
+- Typed:
+  ```
+  Vim is a powerful editor.
+  This file was created using vim.
+  ```
+
+- Pressed `ESC`, typed `:wq` to save and quit.
+
+![Vim editing screen](images/vim.png)
 
 ---
 
-###  Step 4: Concatenate `clients.txt` in the `Clients` Folder
+### Step 4: Reopen and Edit `project.txt` with Vim
 
 ```bash
-cat Clients/clients.txt
+vim project.txt
 ```
 
-![Step 4 Screenshot](images/cat.png)
+- Appended new content in INSERT mode:
+  ```
+  Additional line added.
+  ```
+
+- Saved and exited again with `:wq`
+
+![Vim file after editing](images/vim.png)
 
 ---
 
-###  Step 5: Create `project1.txt` in the `Projects` Folder
+### Step 5: Compare Both Files
 
 ```bash
-touch Projects/project1.txt
+cat my_notes.txt
+cat project.txt
 ```
 
-![Step 5 Screenshot](images/touch-echo.png)
+- Confirmed both files contain appropriate content and were successfully created/edited using CLI editors.
 
+![Vim file after editing](images/cat-mynotes.png)
+![Vim file after editing](images/cat-project.png)
 ---
 
-###  Step 6: Create Two Invoice Files in the `Invoices` Folder
+## Comparison: Vim vs Nano
 
-```bash
-touch Invoices/invoice1.pdf Invoices/invoice2.pdf
-```
-
-![Step 6 Screenshot](images/touch-echo.png)
-
----
-
-###  Step 7: Move `clients.txt` from `Clients` to `Projects`
-
-```bash
-mv Clients/clients.txt Projects/
-```
-
-![Step 7 Screenshot](images/mv-cp-rm.png)
-
----
-
-###  Step 8: Create a Backup of `project1.txt`
-
-```bash
-cp Projects/project1.txt Projects/project1_backup.txt
-```
-
-![Step 8 Screenshot](images/mv-cp-rm.png)
-
----
-
-### Step 9: Delete `invoice2.pdf` from the `Invoices` Folder
-
-```bash
-rm Invoices/invoice2.pdf
-```
-
-![Step 9 Screenshot](images/mv-cp-rm.png)
-
----
-
-###  Step 10: Display Final Folder Structure
-
-```bash
-tree
-SideHustle/
-├── Clients/                (now empty)
-├── Projects/
-│   ├── clients.txt
-│   ├── project1.txt
-│   └── project1_backup.txt
-└── Invoices/
-    └── invoice1.pdf
-```
-
-![Step 10 Screenshot](images/tree.png)
-
----
-
-##  Linux Commands Demonstrated
-
-| Task                          | Command(s) Used                                |
-|-------------------------------|------------------------------------------------|
-| Create directory              | `mkdir`                                        |
-| Change directory              | `cd`                                           |
-| Create file                   | `touch`                                        |
-| Add content to file           | `echo`                                         |
-| View file content             | `cat`                                          |
-| Move or rename files          | `mv`                                           |
-| Copy files                    | `cp`                                           |
-| Delete files                  | `rm`                                           |
-| Show folder structure         | `tree`                                         |
-| List directory content        | `ls`                                           |
+| Feature          | Nano                          | Vim                           |
+|------------------|-------------------------------|-------------------------------|
+| Learning Curve   | Beginner-friendly             | Steeper, powerful             |
+| Editing Mode     | Direct                        | Requires INSERT mode          |
+| Shortcuts        | `CTRL + O`, `CTRL + X`        | `:w`, `:q`, `i`, `ESC`        |
+| Use Case         | Quick edits                   | Advanced editing, scripting   |
 
 ---

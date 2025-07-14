@@ -1,5 +1,5 @@
 
-# Linux Text Editor Task – Corrected Submission
+# Linux Text Editor Task
 
 ## Introduction
 

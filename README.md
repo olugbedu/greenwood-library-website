@@ -2,7 +2,12 @@
 
 ## Overview
 
-In this task, we explored how to add comments to Bash scripts. Comments are essential for writing maintainable, understandable code and serve as notes to yourself and other developers. They help describe what the code does and why it does it, without affecting how the code runs.
+In this task, we explored how to add comments to Bash scripts. Comments are essential for writing maintainable, understandable code and serve as notes to yourself and other developers. They help describe what the code does and why it does it, without affecting how the code runs. The task demonstrates the use of comments in Bash scripts while also fulfilling functional requirements. It includes:
+
+- Use of single-line and multi-line comments
+- A shebang line at the top of the script
+- Functional Bash commands: printing a welcome message, creating a directory, listing contents, and printing a goodbye message
+- Instructions on script execution with correct permissions
 
 ---
 
@@ -37,6 +42,68 @@ echo "Here is an actual code that gets executed"
 ```
 
 ![](images/multi-single-line.png)
+
+---
+
+## Script: `commented_script.sh`
+
+```bash
+#!/bin/bash
+
+# -------------------------------------------
+# Script Name: commented_script.sh
+# Author: Your Name
+# Description:
+#   This script demonstrates the use of comments in Bash.
+#   It prints a welcome message, creates a directory, lists files in the directory,
+#   and displays a goodbye message.
+# -------------------------------------------
+
+# Print welcome message
+echo "Welcome to my Bash script!"
+
+# Create a directory named 'bash_task_dir'
+mkdir bash_task_dir
+
+# List files in the current directory to confirm directory creation
+ls -l
+
+# Print goodbye message
+echo "Script execution completed. Goodbye!"
+```
+
+![](images/commented_script.sh.png)
+
+---
+
+## Script Execution Steps
+
+1. **Make the script executable**
+
+```bash
+chmod u+x commented_script.sh
+```
+
+![](images/chmod.png)
+
+2. **Run the script**
+
+```bash
+./commented_script.sh
+```
+
+![](images/execution.png)
+
+---
+
+## Features Demonstrated
+
+- Shebang line: `#!/bin/bash`
+- Single-line and multi-line comments
+- Printing messages using `echo`
+- Directory creation with `mkdir`
+- File listing with `ls -l`
+- Execution instructions (`chmod`, `./`)
 
 ---
 

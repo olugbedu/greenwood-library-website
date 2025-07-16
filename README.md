@@ -1,227 +1,66 @@
-# Shell Scripting Project: Automating Directory and User Creation
+#  Adding Comments in Bash Scripts
 
 ## Overview
 
-This project focuses on writing a shell script to automate system administrative tasks such as:
-
-- Creating directories
-- Creating user accounts
-- Managing file permissions
-- Executing scripts
-- Understanding the shebang (`#!/bin/bash`)
-- Declaring and using variables in bash
+In this task, we explored how to add comments to Bash scripts. Comments are essential for writing maintainable, understandable code and serve as notes to yourself and other developers. They help describe what the code does and why it does it, without affecting how the code runs.
 
 ---
 
-## 🛠 Tools & Environment
-- **Operating System**: Ubuntu (via VirtualBox or EC2 instance)
-- **Shell**: Bash (`/bin/bash`)
-- **Text Editor**: `vim`
-- **User Access**: Root privileges (`sudo`)
-- **Terminal Commands**: `mkdir`, `vim`, `chmod`, `ls`, `id`, `echo`
+## What Are Comments?
+
+Comments are lines in your code that are ignored by the interpreter. In Bash scripts, they help document the script’s purpose and logic, improving collaboration and self-maintenance.
 
 ---
 
-## Steps Followed
+## Single-Line Comments
 
-### 1. Create a Working Directory
-
-Created a folder on the Ubuntu system named `shell-scripting`:
+Single-line comments start with the `#` symbol. Everything after this symbol on a line is considered a comment.
 
 ```bash
-mkdir shell-scripting
-cd shell-scripting
+# This is a single-line comment in Bash
+echo "Hello, you are learning Bash Scripting on DAREY.IO!" # This is also a comment, following a command
 ```
 
-![](images/mkdir-cd.png)
+![](images/single-line1.png)
 
 ---
 
-### 2. Create the Shell Script File with `vim`
+## Using Multiple Single-Line Comments
 
-Launched the `vim` text editor and created a new file named `my_first_shell_script.sh`:
+Instead of a block comment, Bash uses multiple single-line comments:
 
 ```bash
-vim my_first_shell_script.sh
+# This is another way to create
+# a multi-line comment. Each line
+# is prefixed with a # symbol.
+echo "Here is an actual code that gets executed"
 ```
 
-![](images/vim-ls.png)
+![](images/multi-single-line.png)
 
 ---
 
-### 3. Write the Shell Script
+## Best Practices for Commenting
 
-Inside the `vim` editor, the following script was written:
+Here are some best practices followed in this task:
 
-```bash
-#!/bin/bash
-
-# Create directories
-mkdir Folder1
-mkdir Folder2
-mkdir Folder3
-
-# Create users
-sudo useradd user1
-sudo useradd user2
-sudo useradd user3
-```
-
-![](images/vim.png)
+- **Clarity**: Explained the _why_ behind a piece of code, not just the _what_.
+- **Maintainability**: Wrote comments that remain useful and easy to update as the script changes.
+- **Usefulness**: Focused on commenting complex or non-obvious parts of the code.
+- **Avoided Overcommenting**: Only commented where necessary, avoiding redundancy.
 
 ---
 
-### 4. Save and Exit the Editor
+## Summary
 
-Saved the file using `:wq`.
+This task laid a solid foundation for writing professional Bash scripts using comments effectively. We learned how to:
 
----
+- Write single-line and multi-line comments using `#`
+- Embed comments inline with commands
+- Follow commenting best practices
 
-### 5. Verify Script Creation and File Permissions
-
-Checked the contents of the directory and verified the script exists with:
-
-```bash
-ls -latr
-```
-
-output:
-```
--rw-r--r--  1 gbedu gbedu  147 Jul 16 12:11 my_first_shell_script.sh
-```
-
-This output indicates:
-- The file is owned by `gbedu`
-- The owner has **read** and **write** permissions
-- No one has **execute** permission yet
-
-![](images/ls-latr1.png)
+This understanding will be essential in the upcoming capstone project where these skills will be applied in full Bash scripting use cases.
 
 ---
 
-### 6. Attempted to Run the Script (Permission Denied)
-
-Tried to run the script:
-
-```bash
-./my_first_shell_script.sh
-```
-
-Received this error:
-```
-bash: ./my_first_shell_script.sh: Permission denied
-```
-
-![](images/permission-denied.png)
-
----
-
-### 7. Grant Execute Permission with `chmod`
-
-Added execute permission to the owner:
-
-```bash
-chmod +x my_first_shell_script.sh
-```
-
-Now the file is executable.
-
-![](images/chmod-ls-latr.png)
-
----
-
-### 8. Successfully Executed the Script
-
-Executed the script:
-
-```bash
-./my_first_shell_script.sh
-```
-
-![](images/execution.png)
-
----
-
-### 9. Validated Folder Creation
-
-Used the `ls` command to confirm the folders were created:
-
-```bash
-ls -l
-```
-
-Folders:
-- Folder1
-- Folder2
-- Folder3
-
-![](images/ls%20-l.png)
-
----
-
-### 10. Validated User Creation
-
-Used the `id` command to verify the users were created:
-
-```bash
-id user1
-id user2
-id user3
-```
-
-output:
-![](images/id.png)
-
----
-
-
-### Understanding the Shebang
-
-The script starts with:
-
-```bash
-#!/bin/bash
-```
-
-This line is called a **shebang**, which tells the operating system to use Bash to interpret the script.
-
-If omitted, the system might not know how to run the script properly.
-
----
-
-### Variables in Bash
-
-#### Declare a Variable
-
-```bash
-name="John"
-```
-
-#### Print the Variable
-
-```bash
-echo $name
-```
-
-Expected output:
-```
-John
-```
-
-![](images/bash-var.png)
-
----
-
-## Conclusion
-
-This project successfully demonstrated:
-
-- Writing a bash shell script to automate system tasks
-- Creating directories and Linux users
-- Understanding and modifying file permissions using `chmod`
-- Executing shell scripts from the terminal
-- Using `vim` to edit files
-- Declaring and using variables
-- Interpreting the purpose of the shebang (`#!/bin/bash`)
-
-All requirements from the task were addressed and met, with relevant screenshots and explanations included.
+> Commenting is not just a good habit—it's a critical part of writing clean and maintainable scripts.

@@ -1,99 +1,158 @@
-# Error Handling in Shell Scripting
+# Working with Functions in Shell Scripting
 
-Error handling is a critical component in creating robust and reliable shell scripts. This project demonstrates how to anticipate, detect, and handle errors effectively, especially when dealing with cloud resources like AWS S3.
+## Project Overview
+
+This mini-project focuses on the use of **functions in shell scripting**, aiming to help DataWise Solutions automate infrastructure setup processes, particularly for **AWS EC2 instances** and **S3 buckets**. Functions improve script structure, make code reusable, and allow logical segregation of tasks.
 
 ---
 
-## Steps Taken to Complete the Task
+## Task Execution Steps
 
-### 1. **Identifying Potential Errors**
+### 1. Defined Environment Variable
 
-I began by identifying areas where errors are likely to occur:
-- **File existence checks**
-- **Command execution failures**
-- **Invalid user inputs**
-- **AWS CLI operations (e.g., creating an S3 bucket)**
-
-### 2. **Implementing Conditional Logic**
-
-I used `if`, `elif`, and `else` statements to validate conditions and handle different scenarios. Specifically, I used the exit status `$?` of commands to determine whether they succeeded or failed:
-- `0` means success
-- Any non-zero value indicates an error
-
-### 3. **Providing Informative Messages**
-
-Clear error messages were added to ensure users are aware of what went wrong and how to address it.
-
-Example snippet used:
+The script starts by accepting an environment as an argument:
 ```bash
-if [ ! -f "$file" ]; then
-    echo "Error: File $file not found. Please verify the path."
-    exit 1
-fi
+ENVIRONMENT=$1
 ```
 
+This variable determines whether the script is being executed for the `local`, `testing`, or `production` environment.
+
 ---
 
-## S3 Bucket Existence Check Example
+### 2. Implemented `check_num_of_args` Function
 
-### Objective:
-Prevent redundant AWS S3 bucket creation by checking if a bucket already exists.
-
-### Script:
+This function ensures that the script receives exactly one argument:
 ```bash
-create_s3_bucket() {
-    local bucket_name="gbedu-bucket"
-
-    # Check if bucket exists
-    if aws s3api head-bucket --bucket "$bucket_name" 2>/dev/null; then
-        echo "S3 bucket '$bucket_name' already exists."
-    else
-        # Create bucket if it doesn't exist
-        if aws s3 mb "s3://$bucket_name" --region us-east-1; then
-            echo "S3 bucket '$bucket_name' created successfully."
-        else
-            echo "Error: Failed to create S3 bucket '$bucket_name'."
-            exit 1
-        fi
+check_num_of_args() {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: $0 <environment>"
+        exit 1
     fi
+}
+```
+ **Purpose**: Prevents the script from executing without the required environment parameter.
+
+---
+
+### 3. Added AWS CLI Check with `check_aws_cli` Function
+
+```bash
+check_aws_cli() {
+    if ! command -v aws &> /dev/null; then
+        echo "AWS CLI is not installed. Please install it before proceeding."
+        return 1
+    fi
+}
+```
+ **Purpose**: Ensures the `aws` command-line tool is installed before executing AWS-related commands.
+
+---
+
+### 4. Verified AWS Profile Using `check_aws_profile`
+
+```bash
+check_aws_profile() {
+    if [ -z "$AWS_PROFILE" ]; then
+        echo "AWS profile environment variable is not set."
+        return 1
+    fi
+}
+```
+ **Purpose**: Checks whether an AWS profile is configured using the `$AWS_PROFILE` environment variable.
+
+---
+
+### 5. Introduced `activate_infra_environment` Placeholder
+
+This is a stub for future infrastructure-specific logic:
+```bash
+activate_infra_environment() {
+    # Implementation for activating infrastructure environment
 }
 ```
 
 ---
 
-## Key Improvements in the Script
+### 6. Environment Routing Logic
 
-| Feature        | Description                                                                 |
-|----------------|-----------------------------------------------------------------------------|
-| **Prevention** | Prevents duplicate creation of existing S3 buckets using `head-bucket`.     |
-| **Clarity**    | Provides success/failure messages after each action.                        |
-| **Termination**| Script exits gracefully on failure to avoid further errors.                 |
-
----
-
-## Summary of the Task
-
-This task involved enhancing the reliability of a shell script by:
-- Validating the existence of AWS resources before taking action.
-- Using conditional logic to branch based on command results.
-- Displaying meaningful output to inform users of script status.
-- Preventing unnecessary AWS operations, saving time and cost.
+After all pre-checks, the script determines the infrastructure environment:
+```bash
+if [ "$ENVIRONMENT" == "local" ]; then
+    echo "Running script for local Environment..."
+elif [ "$ENVIRONMENT" == "testing" ]; then
+    echo "Running script for Testing Environment..."
+elif [ "$ENVIRONMENT" == "production" ]; then
+    echo "Running script for Production Environment..."
+else
+    echo "Invalid environment specified. Please use 'local', 'testing', or 'production'."
+    exit 2
+fi
+```
 
 ---
 
-## Key Commands Used
+### 7. Final Script Structure
 
-| Command                  | Purpose                                         |
-|--------------------------|-------------------------------------------------|
-| `aws s3api head-bucket`  | Check if an S3 bucket exists                    |
-| `aws s3 mb`              | Create a new S3 bucket                          |
-| `2>/dev/null`            | Suppress error output from a command            |
-| `exit 1`                 | Terminate script execution on failure           |
+```bash
+#!/bin/bash
+
+ENVIRONMENT=$1
+
+check_num_of_args() {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: $0 <environment>"
+        exit 1
+    fi
+}
+
+activate_infra_environment() {
+    # Future implementation for activating environment
+}
+
+check_aws_cli() {
+    if ! command -v aws &> /dev/null; then
+        echo "AWS CLI is not installed. Please install it before proceeding."
+        return 1
+    fi
+}
+
+check_aws_profile() {
+    if [ -z "$AWS_PROFILE" ]; then
+        echo "AWS profile environment variable is not set."
+        return 1
+    fi
+}
+
+# Function calls
+check_num_of_args
+activate_infra_environment
+check_aws_cli
+check_aws_profile
+
+# Environment decision
+if [ "$ENVIRONMENT" == "local" ]; then
+    echo "Running script for local Environment..."
+elif [ "$ENVIRONMENT" == "testing" ]; then
+    echo "Running script for Testing Environment..."
+elif [ "$ENVIRONMENT" == "production" ]; then
+    echo "Running script for Production Environment..."
+else
+    echo "Invalid environment specified. Please use 'local', 'testing', or 'production'."
+    exit 2
+fi
+```
 
 ---
 
-## Lessons Learned
+## Key Learnings
 
-- Use `if` statements and exit codes to control the flow of execution.
-- Always verify external dependencies (like cloud resources) before acting on them.
-- Comment your scripts to improve maintainability and readability.
+- **Encapsulation with functions** helps modularize and maintain scripts.
+- **Environment-based scripting** allows flexibility across multiple deployment stages.
+- **Pre-checks like CLI installation and environment variables** reduce runtime failures.
+- **Clear function names and structure** increase readability and maintainability.
+
+---
+
+## Final Thoughts
+
+This project deepened my understanding of shell scripting best practices. By building reusable functions for argument validation, AWS CLI checks, and environment profile validation, I created a script that is clean, efficient, and production-ready. These concepts are foundational for building more complex infrastructure-as-code scripts and serve as a solid base for further automation in DevOps workflows.

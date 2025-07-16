@@ -1,133 +1,129 @@
-#  Adding Comments in Bash Scripts
+# Control Flow in Bash Shell Scripting
 
-## Overview
+## Objective
 
-In this task, we explored how to add comments to Bash scripts. Comments are essential for writing maintainable, understandable code and serve as notes to yourself and other developers. They help describe what the code does and why it does it, without affecting how the code runs. The task demonstrates the use of comments in Bash scripts while also fulfilling functional requirements. It includes:
+This project explores the use of **control flow statements** in Bash scripting, particularly focusing on:
 
-- Use of single-line and multi-line comments
-- A shebang line at the top of the script
-- Functional Bash commands: printing a welcome message, creating a directory, listing contents, and printing a goodbye message
-- Instructions on script execution with correct permissions
+- `if`, `elif`, `else` statements
+- `for` loops (list form and C-style form)
 
----
-
-## What Are Comments?
-
-Comments are lines in your code that are ignored by the interpreter. In Bash scripts, they help document the script’s purpose and logic, improving collaboration and self-maintenance.
+These concepts are essential for decision-making and automation in shell scripts.
 
 ---
 
-## Single-Line Comments
+## What is Control Flow?
 
-Single-line comments start with the `#` symbol. Everything after this symbol on a line is considered a comment.
+Control flow determines the order in which statements are executed in a script. It lets the script:
 
-```bash
-# This is a single-line comment in Bash
-echo "Hello, you are learning Bash Scripting on DAREY.IO!" # This is also a comment, following a command
-```
-
-![](images/single-line1.png)
+- Make decisions based on conditions (`if-else`)
+- Repeat actions (`for` loops)
 
 ---
 
-## Using Multiple Single-Line Comments
+## Task Overview
 
-Instead of a block comment, Bash uses multiple single-line comments:
+Required to:
 
-```bash
-# This is another way to create
-# a multi-line comment. Each line
-# is prefixed with a # symbol.
-echo "Here is an actual code that gets executed"
-```
-
-![](images/multi-single-line.png)
+1. Create a script demonstrating the use of `if`, `elif`, and `else`.
+2. Create a script using:
+   - List-style `for` loop
+   - C-style `for` loop
+3. Add each script to a separate `.sh` file.
+4. Set the correct permissions using `chmod`.
+5. Execute each script and evaluate its output.
 
 ---
 
-## Script: `commented_script.sh`
+## Script 1: if-elif-else Statement
+
+Filename: `if_script.sh`
 
 ```bash
 #!/bin/bash
 
-# -------------------------------------------
-# Script Name: commented_script.sh
-# Author: Your Name
-# Description:
-#   This script demonstrates the use of comments in Bash.
-#   It prints a welcome message, creates a directory, lists files in the directory,
-#   and displays a goodbye message.
-# -------------------------------------------
+# Prompt user for a number
+read -p "Enter a number: " num
 
-# Print welcome message
-echo "Welcome to my Bash script!"
-
-# Create a directory named 'bash_task_dir'
-mkdir bash_task_dir
-
-# List files in the current directory to confirm directory creation
-ls -l
-
-# Print goodbye message
-echo "Script execution completed. Goodbye!"
+# Check if positive, negative, or zero
+if [ $num -gt 0 ]; then
+    echo "The number is positive."
+elif [ $num -lt 0 ]; then
+    echo "The number is negative."
+else
+    echo "The number is zero."
+fi
 ```
 
-![](images/commented_script.sh.png)
+![](images/if-else.png)
 
 ---
 
-## Script Execution Steps
+## Script 2: List-style For Loop
 
-1. **Make the script executable**
+Filename: `for_list.sh`
 
 ```bash
-chmod u+x commented_script.sh
+#!/bin/bash
+
+# Loop through numbers 1 to 5 and print a message
+for i in 1 2 3 4 5; do
+    echo "Hello, World! This is message $i"
+done
 ```
 
-![](images/chmod.png)
+![](images/for-loop.png)
 
-2. **Run the script**
+---
+
+## Script 3: C-style For Loop
+
+Filename: `for_cstyle.sh`
 
 ```bash
-./commented_script.sh
+#!/bin/bash
+
+# Loop using C-style syntax
+for (( i=0; i<5; i++ )); do
+    echo "Number: $i"
+done
+```
+
+![](images/c-style.png)
+
+---
+
+## Setting Permissions and Running Scripts
+
+Make each script executable:
+
+```bash
+chmod u+x if_script.sh
+chmod u+x for_list.sh
+chmod u+x for_cstyle.sh
+```
+![](images/chmod.png)
+
+Run each script:
+
+```bash
+./if_script.sh
+./for_list.sh
+./for_cstyle.sh
 ```
 
 ![](images/execution.png)
 
 ---
 
-## Features Demonstrated
+## Key Takeaways
 
-- Shebang line: `#!/bin/bash`
-- Single-line and multi-line comments
-- Printing messages using `echo`
-- Directory creation with `mkdir`
-- File listing with `ls -l`
-- Execution instructions (`chmod`, `./`)
-
----
-
-## Best Practices for Commenting
-
-Here are some best practices followed in this task:
-
-- **Clarity**: Explained the _why_ behind a piece of code, not just the _what_.
-- **Maintainability**: Wrote comments that remain useful and easy to update as the script changes.
-- **Usefulness**: Focused on commenting complex or non-obvious parts of the code.
-- **Avoided Overcommenting**: Only commented where necessary, avoiding redundancy.
+- `if`, `elif`, and `else` provide conditional logic
+- `for` loops automate repetitive actions
+- `-gt`, `-lt`, and other operators are used for numeric comparisons
+- Scripts must be given execute permission using `chmod`
 
 ---
 
 ## Summary
 
-This task laid a solid foundation for writing professional Bash scripts using comments effectively. We learned how to:
-
-- Write single-line and multi-line comments using `#`
-- Embed comments inline with commands
-- Follow commenting best practices
-
-This understanding will be essential in the upcoming capstone project where these skills will be applied in full Bash scripting use cases.
-
----
-
-> Commenting is not just a good habit—it's a critical part of writing clean and maintainable scripts.
+This task solidifies your understanding of **control flow** in Bash scripts. By creating and executing scripts with conditionals and loops, you’ve practiced one of the core building blocks of automation and scripting.

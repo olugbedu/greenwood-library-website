@@ -1,118 +1,227 @@
+# Shell Scripting Project: Automating Directory and User Creation
 
-# Linux Text Editor Task
+## Overview
 
-## Introduction
+This project focuses on writing a shell script to automate system administrative tasks such as:
 
-This README outlines using the Linux Text Editor:
-
-- Using **Linux-based text editors** such as `vim` and `nano`
-- Creating, editing, and managing files using these editors
-- Understanding use cases, functionality, and navigation within both editors
-
-All actions were performed using **Ubuntu 22.04 LTS**.
-
----
-
-## Tools Used
-
-- **Operating System**: Ubuntu 22.04 LTS (VirtualBox)
-- **Text Editors**: Vim, Nano (both installed by default)
-- **Terminal Access**: Ubuntu Terminal (Bash)
+- Creating directories
+- Creating user accounts
+- Managing file permissions
+- Executing scripts
+- Understanding the shebang (`#!/bin/bash`)
+- Declaring and using variables in bash
 
 ---
 
-## Task Steps
+## 🛠 Tools & Environment
+- **Operating System**: Ubuntu (via VirtualBox or EC2 instance)
+- **Shell**: Bash (`/bin/bash`)
+- **Text Editor**: `vim`
+- **User Access**: Root privileges (`sudo`)
+- **Terminal Commands**: `mkdir`, `vim`, `chmod`, `ls`, `id`, `echo`
 
-### Step 1: Create and Edit a File Using `nano`
+---
+
+## Steps Followed
+
+### 1. Create a Working Directory
+
+Created a folder on the Ubuntu system named `shell-scripting`:
 
 ```bash
-nano my_notes.txt
+mkdir shell-scripting
+cd shell-scripting
 ```
 
-- Entered some text:
-  ```
-  This is a test file created with nano.
-  Nano is easy to use.
-  ```
-
-- Saved with `CTRL + O`, then exited with `CTRL + X`.
-
-![Nano editor with content](images/nano.png)
+![](images/mkdir-cd.png)
 
 ---
 
-### Step 2: View Content of the File
+### 2. Create the Shell Script File with `vim`
+
+Launched the `vim` text editor and created a new file named `my_first_shell_script.sh`:
 
 ```bash
-cat my_notes.txt
+vim my_first_shell_script.sh
 ```
 
-- Output:
-  ```
-  This is a test file created with nano.
-  Nano is easy to use.
-  ```
-
-![Terminal output using cat](images/cat-mynotes.png)
+![](images/vim-ls.png)
 
 ---
 
-### Step 3: Create and Edit a File Using `vim`
+### 3. Write the Shell Script
+
+Inside the `vim` editor, the following script was written:
 
 ```bash
-vim project.txt
+#!/bin/bash
+
+# Create directories
+mkdir Folder1
+mkdir Folder2
+mkdir Folder3
+
+# Create users
+sudo useradd user1
+sudo useradd user2
+sudo useradd user3
 ```
 
-- Pressed `i` to enter INSERT mode
-- Typed:
-  ```
-  Vim is a powerful editor.
-  This file was created using vim.
-  ```
-
-- Pressed `ESC`, typed `:wq` to save and quit.
-
-![Vim editing screen](images/vim.png)
+![](images/vim.png)
 
 ---
 
-### Step 4: Reopen and Edit `project.txt` with Vim
+### 4. Save and Exit the Editor
+
+Saved the file using `:wq`.
+
+---
+
+### 5. Verify Script Creation and File Permissions
+
+Checked the contents of the directory and verified the script exists with:
 
 ```bash
-vim project.txt
+ls -latr
 ```
 
-- Appended new content in INSERT mode:
-  ```
-  Additional line added.
-  ```
+output:
+```
+-rw-r--r--  1 gbedu gbedu  147 Jul 16 12:11 my_first_shell_script.sh
+```
 
-- Saved and exited again with `:wq`
+This output indicates:
+- The file is owned by `gbedu`
+- The owner has **read** and **write** permissions
+- No one has **execute** permission yet
 
-![Vim file after editing](images/vim.png)
+![](images/ls-latr1.png)
 
 ---
 
-### Step 5: Compare Both Files
+### 6. Attempted to Run the Script (Permission Denied)
+
+Tried to run the script:
 
 ```bash
-cat my_notes.txt
-cat project.txt
+./my_first_shell_script.sh
 ```
 
-- Confirmed both files contain appropriate content and were successfully created/edited using CLI editors.
+Received this error:
+```
+bash: ./my_first_shell_script.sh: Permission denied
+```
 
-![Vim file after editing](images/cat-mynotes.png)
-![Vim file after editing](images/cat-project.png)
----
-
-## Comparison: Vim vs Nano
-
-| Feature          | Nano                          | Vim                           |
-|------------------|-------------------------------|-------------------------------|
-| Learning Curve   | Beginner-friendly             | Steeper, powerful             |
-| Editing Mode     | Direct                        | Requires INSERT mode          |
-| Shortcuts        | `CTRL + O`, `CTRL + X`        | `:w`, `:q`, `i`, `ESC`        |
-| Use Case         | Quick edits                   | Advanced editing, scripting   |
+![](images/permission-denied.png)
 
 ---
+
+### 7. Grant Execute Permission with `chmod`
+
+Added execute permission to the owner:
+
+```bash
+chmod +x my_first_shell_script.sh
+```
+
+Now the file is executable.
+
+![](images/chmod-ls-latr.png)
+
+---
+
+### 8. Successfully Executed the Script
+
+Executed the script:
+
+```bash
+./my_first_shell_script.sh
+```
+
+![](images/execution.png)
+
+---
+
+### 9. Validated Folder Creation
+
+Used the `ls` command to confirm the folders were created:
+
+```bash
+ls -l
+```
+
+Folders:
+- Folder1
+- Folder2
+- Folder3
+
+![](images/ls%20-l.png)
+
+---
+
+### 10. Validated User Creation
+
+Used the `id` command to verify the users were created:
+
+```bash
+id user1
+id user2
+id user3
+```
+
+output:
+![](images/id.png)
+
+---
+
+
+### Understanding the Shebang
+
+The script starts with:
+
+```bash
+#!/bin/bash
+```
+
+This line is called a **shebang**, which tells the operating system to use Bash to interpret the script.
+
+If omitted, the system might not know how to run the script properly.
+
+---
+
+### Variables in Bash
+
+#### Declare a Variable
+
+```bash
+name="John"
+```
+
+#### Print the Variable
+
+```bash
+echo $name
+```
+
+Expected output:
+```
+John
+```
+
+![](images/bash-var.png)
+
+---
+
+## Conclusion
+
+This project successfully demonstrated:
+
+- Writing a bash shell script to automate system tasks
+- Creating directories and Linux users
+- Understanding and modifying file permissions using `chmod`
+- Executing shell scripts from the terminal
+- Using `vim` to edit files
+- Declaring and using variables
+- Interpreting the purpose of the shebang (`#!/bin/bash`)
+
+All requirements from the task were addressed and met, with relevant screenshots and explanations included.

@@ -1,129 +1,99 @@
-# Control Flow in Bash Shell Scripting
+# Error Handling in Shell Scripting
 
-## Objective
-
-This project explores the use of **control flow statements** in Bash scripting, particularly focusing on:
-
-- `if`, `elif`, `else` statements
-- `for` loops (list form and C-style form)
-
-These concepts are essential for decision-making and automation in shell scripts.
+Error handling is a critical component in creating robust and reliable shell scripts. This project demonstrates how to anticipate, detect, and handle errors effectively, especially when dealing with cloud resources like AWS S3.
 
 ---
 
-## What is Control Flow?
+## Steps Taken to Complete the Task
 
-Control flow determines the order in which statements are executed in a script. It lets the script:
+### 1. **Identifying Potential Errors**
 
-- Make decisions based on conditions (`if-else`)
-- Repeat actions (`for` loops)
+I began by identifying areas where errors are likely to occur:
+- **File existence checks**
+- **Command execution failures**
+- **Invalid user inputs**
+- **AWS CLI operations (e.g., creating an S3 bucket)**
 
----
+### 2. **Implementing Conditional Logic**
 
-## Task Overview
+I used `if`, `elif`, and `else` statements to validate conditions and handle different scenarios. Specifically, I used the exit status `$?` of commands to determine whether they succeeded or failed:
+- `0` means success
+- Any non-zero value indicates an error
 
-Required to:
+### 3. **Providing Informative Messages**
 
-1. Create a script demonstrating the use of `if`, `elif`, and `else`.
-2. Create a script using:
-   - List-style `for` loop
-   - C-style `for` loop
-3. Add each script to a separate `.sh` file.
-4. Set the correct permissions using `chmod`.
-5. Execute each script and evaluate its output.
+Clear error messages were added to ensure users are aware of what went wrong and how to address it.
 
----
-
-## Script 1: if-elif-else Statement
-
-Filename: `if_script.sh`
-
+Example snippet used:
 ```bash
-#!/bin/bash
-
-# Prompt user for a number
-read -p "Enter a number: " num
-
-# Check if positive, negative, or zero
-if [ $num -gt 0 ]; then
-    echo "The number is positive."
-elif [ $num -lt 0 ]; then
-    echo "The number is negative."
-else
-    echo "The number is zero."
+if [ ! -f "$file" ]; then
+    echo "Error: File $file not found. Please verify the path."
+    exit 1
 fi
 ```
 
-![](images/if-else.png)
-
 ---
 
-## Script 2: List-style For Loop
+## S3 Bucket Existence Check Example
 
-Filename: `for_list.sh`
+### Objective:
+Prevent redundant AWS S3 bucket creation by checking if a bucket already exists.
 
+### Script:
 ```bash
-#!/bin/bash
+create_s3_bucket() {
+    local bucket_name="gbedu-bucket"
 
-# Loop through numbers 1 to 5 and print a message
-for i in 1 2 3 4 5; do
-    echo "Hello, World! This is message $i"
-done
+    # Check if bucket exists
+    if aws s3api head-bucket --bucket "$bucket_name" 2>/dev/null; then
+        echo "S3 bucket '$bucket_name' already exists."
+    else
+        # Create bucket if it doesn't exist
+        if aws s3 mb "s3://$bucket_name" --region us-east-1; then
+            echo "S3 bucket '$bucket_name' created successfully."
+        else
+            echo "Error: Failed to create S3 bucket '$bucket_name'."
+            exit 1
+        fi
+    fi
+}
 ```
 
-![](images/for-loop.png)
+---
+
+## Key Improvements in the Script
+
+| Feature        | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| **Prevention** | Prevents duplicate creation of existing S3 buckets using `head-bucket`.     |
+| **Clarity**    | Provides success/failure messages after each action.                        |
+| **Termination**| Script exits gracefully on failure to avoid further errors.                 |
 
 ---
 
-## Script 3: C-style For Loop
+## Summary of the Task
 
-Filename: `for_cstyle.sh`
-
-```bash
-#!/bin/bash
-
-# Loop using C-style syntax
-for (( i=0; i<5; i++ )); do
-    echo "Number: $i"
-done
-```
-
-![](images/c-style.png)
+This task involved enhancing the reliability of a shell script by:
+- Validating the existence of AWS resources before taking action.
+- Using conditional logic to branch based on command results.
+- Displaying meaningful output to inform users of script status.
+- Preventing unnecessary AWS operations, saving time and cost.
 
 ---
 
-## Setting Permissions and Running Scripts
+## Key Commands Used
 
-Make each script executable:
-
-```bash
-chmod u+x if_script.sh
-chmod u+x for_list.sh
-chmod u+x for_cstyle.sh
-```
-![](images/chmod.png)
-
-Run each script:
-
-```bash
-./if_script.sh
-./for_list.sh
-./for_cstyle.sh
-```
-
-![](images/execution.png)
+| Command                  | Purpose                                         |
+|--------------------------|-------------------------------------------------|
+| `aws s3api head-bucket`  | Check if an S3 bucket exists                    |
+| `aws s3 mb`              | Create a new S3 bucket                          |
+| `2>/dev/null`            | Suppress error output from a command            |
+| `exit 1`                 | Terminate script execution on failure           |
 
 ---
 
-## Key Takeaways
+## Lessons Learned
 
-- `if`, `elif`, and `else` provide conditional logic
-- `for` loops automate repetitive actions
-- `-gt`, `-lt`, and other operators are used for numeric comparisons
-- Scripts must be given execute permission using `chmod`
-
----
-
-## Summary
-
-This task solidifies your understanding of **control flow** in Bash scripts. By creating and executing scripts with conditionals and loops, you’ve practiced one of the core building blocks of automation and scripting.
+- Use `if` statements and exit codes to control the flow of execution.
+- Always verify external dependencies (like cloud resources) before acting on them.
+- Comment your scripts to improve maintainability and readability.
